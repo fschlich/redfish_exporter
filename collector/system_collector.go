@@ -513,12 +513,12 @@ func (s *SystemCollector) Collect(ch chan<- prometheus.Metric) {
 				systemLogContext.WithField("operation", "system.PCIeDevices()").WithError(err).Error("error getting PCI-E device data from system")
 			} else if pcieDevices == nil {
 				systemLogContext.WithField("operation", "system.PCIeDevices()").Info("no PCI-E device data found")
-			} else {
-				wg5 := &sync.WaitGroup{}
-				wg5.Add(len(pcieDevices))
-				for _, pcieDevice := range pcieDevices {
-					go parsePcieDevice(ch, systemHostName, pcieDevice, wg5)
-				}
+			//} else {
+			//	wg5 := &sync.WaitGroup{}
+			//	wg5.Add(len(pcieDevices))
+			//	for _, pcieDevice := range pcieDevices {
+			//		go parsePcieDevice(ch, systemHostName, pcieDevice, wg5)
+			//	}
 			}
 
 			//process networkinterfaces
