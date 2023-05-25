@@ -26,6 +26,10 @@ var (
 	BuildHost     string
 	rootLoggerCtx *alog.Entry
 
+	loglevel = kingpin.Flag(
+		"loglevel",
+		"target log level",
+	).Default("info").String();
 	configFile = kingpin.Flag(
 		"config.file",
 		"Path to configuration file.",
@@ -182,7 +186,9 @@ func main() {
             </html>`))
 	})
 
+	rootLoggerCtx.Infof("redfish target loglevel is %s", *loglevel)
 	rootLoggerCtx.Infof("app started. listening on %s", *listenAddress)
+	alog.SetLevelFromString(*loglevel)
 	srv := &http.Server{Addr: *listenAddress}
 	err := web.ListenAndServe(srv, *webConfig, kitlogger)
 	if err != nil {
